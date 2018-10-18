@@ -1,0 +1,32 @@
+/* Fade in/out */
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0
+}
+
+/* Fade slide in */
+.fade-in-enter-active {
+  transition: opacity .5s
+}
+.fade-in-enter {
+  opacity: 0
+}
+
+/* Fade slide in/out */
+.slide-fade-enter-active {
+  transition: all .3s ease;
+}
+.slide-fade-leave-active {
+  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to {
+  transform: translateX(10px);
+  opacity: 0;
+}
+
+form span.error {
+    color: #cc1010;
+    font-size: 12px;
+}

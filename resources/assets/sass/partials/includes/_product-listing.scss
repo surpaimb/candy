@@ -1,0 +1,209 @@
+.element {
+  &.product-list {
+    background: white;
+    -webkit-box-shadow: 0 3px 5px 0 rgba(red(lighten($second-color, 30%)), green(lighten($second-color, 30%)), blue(lighten($second-color, 30%)),0.8);
+    box-shadow: 0 3px 5px 0 rgba(red(lighten($second-color, 30%)), green(lighten($second-color, 30%)), blue(lighten($second-color, 30%)),0.8);
+
+    img {
+      width: 100%;
+    }
+
+    h1.small {
+      margin-bottom: #{$standard-gap / 2};
+    }
+
+    .category-description {
+      margin-bottom: $standard-gap;
+      font-size: 0.9em;
+
+      p, font, span {
+        font-family: $second-font !important;
+        color: $copy-color;
+      }
+    }
+  }
+
+  &.product-box {
+    position: relative;
+    padding: 0;
+    transition: box-shadow 0.2s ease 0s;
+
+    a {
+      border-bottom: 0;
+    }
+
+    .sale {
+      position: absolute;
+      z-index: 2;
+      display: block;
+      top: -$standard-gap;
+      right: -$standard-gap;
+      width: 80px;
+      height: 80px;
+      text-align: center;
+      line-height: 80px;
+      color: white;
+      background-color: $third-color;
+      border-radius: 50%;
+    }
+
+    .product-img {
+      position: relative;
+      display: block;
+      overflow: hidden;
+
+      img {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        height: auto;
+        transition: all 0.4s ease-in-out
+      }
+
+      &:focus {
+        top: 0;
+      }
+    }
+
+    .product-title {
+      min-height: #{$standard-gap * 2};
+    }
+
+    &:hover {
+      .product-img {
+        img {
+          -webkit-transform: scale(1.1);
+          -moz-transform: scale(1.1);
+          -o-transform: scale(1.1);
+          transform: scale(1.1);
+        }
+      }
+    }
+
+    .product-details {
+      display: block;
+      padding: #{$standard-gap / 2};
+      text-align: center;
+
+      &:focus {
+          top: 0;
+      }
+    }
+
+    &.listing {
+      .product-img {
+        margin-top: calc(#{$standard-gap} / 3 * 2);
+        margin-left: calc(#{$standard-gap} / 3 * 2);
+        margin-bottom: calc(#{$standard-gap} / 3 * 2);
+      }
+
+      .product-details {
+        padding-top: $standard-gap;
+        padding-left: 0;
+        padding-bottom: $standard-gap;
+        padding-right: $standard-gap;
+        text-align: left;
+
+        @include tablet {
+          .product-title {
+            font-size: 1.4em;
+          }
+        }
+      }
+
+      .product-price {
+        font-size: 2em;
+      }
+    }
+
+    @include phone {
+      .product-img, .product-details {
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: -4px;
+      }
+
+      .product-img {
+        width: 100%;
+      }
+
+      .product-details {
+        width: 100%;
+        text-align: left;
+        padding-top: 0;
+        padding-bottom: 0;
+      }
+    }
+  }
+
+  &.sort-pagination {
+    padding-top: #{$standard-gap / 2};
+    padding-bottom: #{$standard-gap / 2};
+    background: white;
+    -webkit-box-shadow: 0 3px 5px 0 rgba(red(lighten($second-color, 30%)), green(lighten($second-color, 30%)), blue(lighten($second-color, 30%)),0.8);
+    box-shadow: 0 3px 5px 0 rgba(red(lighten($second-color, 30%)), green(lighten($second-color, 30%)), blue(lighten($second-color, 30%)),0.8);
+
+    .sort, .display, .pagination-area {
+      display: inline-block;
+      vertical-align: top;
+      width: 33.33%;
+      margin-right: -4px;
+    }
+
+    .custom-select {
+      margin-left: 5px;
+      margin-right: 5px;
+    }
+
+    .list-label, p {
+     font-family: $prime-font;
+     color: $prime-color;
+    }
+
+    .form-group {
+      margin-bottom: 0;
+    }
+
+    @media (max-width: 1029px) {
+      .list-label {
+        display: none;
+      }
+    }
+
+    @media (max-width: 950px) {
+      .sort, .pagination-area {
+        width: 50%;
+      }
+
+      .display {
+        display: none;
+      }
+    }
+
+    @include phone {
+      padding-left: #{$standard-gap / 3};
+      padding-right: #{$standard-gap / 3};
+    }
+  }
+
+  @include phone {
+    margin-bottom: #{$standard-gap / 3};
+  }
+}
+
+.pagination-area {
+  text-align: right;
+
+  button, p {
+    display: inline-block;
+  }
+
+  p {
+    margin-left: #{$standard-gap / 6};
+    margin-right: #{$standard-gap / 6};
+
+    @media (max-width: 1029px) {
+      display: none;
+    }
+  }
+}

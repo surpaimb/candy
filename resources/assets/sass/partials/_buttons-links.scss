@@ -1,0 +1,418 @@
+a {
+  position: relative;
+  display: inline-block;
+  color: $prime-color;
+  border-bottom: 1px dotted $prime-color;
+
+  &:visited {
+      color: $second-color;
+      text-decoration: none;
+  }
+
+  &:hover {
+      color: darken($second-color, 10%);
+      text-decoration: none;
+  }
+
+  &:focus {
+      top: 1px;
+      color: darken($second-color, 10%);
+      text-decoration: none;
+  }
+
+  &:active {
+      color: darken($second-color, 10%);
+      text-decoration: none;
+  }
+}
+
+.promotions {
+  a {
+    display: block;
+    height: 50px;
+    padding-top: calc(#{$standard-gap} - 23px);
+    color: $prime-color;
+
+    &:visited, &:hover, &:focus, &active {
+        color: $prime-color;
+    }
+  }
+}
+
+.btn {
+  position: relative;
+  top: 0;
+  margin-bottom: 0;
+  padding: 12px 25px;
+  font-family: $prime-font;
+  font-size: calc(#{$base} + 2px);
+  font-weight: 400;
+  text-transform: uppercase;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 4px;
+  transition: box-shadow 0.2s ease 0s;
+
+  &:hover, &:focus {
+    transition: box-shadow 0.2s ease 0s,;
+  }
+
+  &.btn-xs {
+    font-size: calc(#{$base} - 4px);
+    padding: 5px 10px;
+  }
+
+  &.btn-sm {
+    font-size: calc(#{$base} - 2px);
+    padding: 10px 20px;
+  }
+
+  &.btn-lg {
+    padding: 15px 30px;
+    font-size: calc(#{$base} + 4px);
+  }
+
+  &.btn-green {
+    color: white;
+    background-color: $fourth-color;
+    @include linear-gradient ($fourth-color, darken($fourth-color, 5%));
+    border-color: darken($fourth-color, 10%);
+    text-shadow: 0px 0px 5px darken($fourth-color, 10%);
+    box-shadow: 0px 0px 0px 0px lighten($fourth-color, 10%);
+
+    &:hover {
+      box-shadow: 0px 0px 10px 0px lighten($fourth-color, 15%);
+    }
+  }
+
+  &.btn-blue {
+    color: white;
+    background-color: $prime-color;
+    @include linear-gradient ($prime-color, darken($prime-color, 5%));
+    border-color: darken($prime-color, 10%);
+    text-shadow: 0px 0px 5px darken($prime-color, 10%);
+    box-shadow: 0px 0px 0px 0px lighten($prime-color, 10%);
+
+    &:hover {
+      box-shadow: 0px 0px 10px 0px lighten($prime-color, 15%);
+    }
+  }
+
+  &.btn-light-blue {
+    color: white;
+    background-color: $second-color;
+    @include linear-gradient ($second-color, darken($second-color, 5%));
+    border-color: darken($second-color, 10%);
+    text-shadow: 0px 0px 5px darken($second-color, 10%);
+    box-shadow: 0px 0px 0px 0px lighten($second-color, 10%);
+
+    &:hover {
+      box-shadow: 0px 0px 10px 0px lighten($second-color, 10%);
+    }
+  }
+
+
+  &.btn-lighter-blue {
+    color: #c77dbe;
+    background-color: #f4d0ef;
+    @include linear-gradient (#fcddf8, #f4d0ef);
+    border-color: #f4d0ef;
+    text-shadow: 0px 0px 5px darken(#f4d0ef, 10%);
+    box-shadow: 0px 0px 0px 0px lighten(#f4d0ef, 10%);
+
+    &:hover {
+      box-shadow: 0px 0px 10px 0px #f4d0ef;
+    }
+  }
+
+  &.btn-purple {
+    color: white;
+    background-color: $third-color;
+    @include linear-gradient ($third-color, darken($third-color, 5%));
+    border-color: darken($third-color, 10%);
+    text-shadow: 0px 0px 5px darken($third-color, 10%);
+    box-shadow: 0px 0px 0px 0px lighten($third-color, 10%);
+
+    &:hover {
+      box-shadow: 0px 0px 10px 0px lighten($third-color, 15%);
+    }
+  }
+
+  &.btn-grey {
+    color: white;
+    background-color: lighten($copy-color, 10%);
+    @include linear-gradient (lighten($copy-color, 50%), lighten($copy-color, 40%));
+    border-color: lighten($copy-color, 35%);
+    text-shadow: 0px 0px 5px lighten($copy-color, 40%);
+    box-shadow: 0px 0px 0px 0px lighten($copy-color, 40%);
+
+    &:hover {
+      box-shadow: 0px 0px 10px 0px lighten($copy-color, 40%);
+    }
+  }
+
+  &.disabled {
+    color: darken(white, 25%);
+    background-color: white;
+    border: 1px solid darken(white, 25%);
+  }
+
+  &.btn-text {
+    vertical-align: top;
+    height: auto;
+    padding: 0;
+    font-size: 1em;
+    font-weight: normal;
+    background: 0;
+    border: 0;
+
+    &:hover {
+      top: 0;
+      border-bottom: 0;
+    }
+  }
+
+  &.btn-browse {
+    display: none;
+    vertical-align: top;
+    width: 260px;
+    height: 60px;
+    margin-right: -4px;
+    padding-left: 12px;
+    padding-right: 12px;
+
+    img {
+      height: 35px;
+      margin-right: calc(#{$standard-gap} / 2);
+    }
+
+    @include tablet {
+      display: inline-block;
+    }
+
+    @include phone {
+      display: inline-block;
+      width: 33.3%;
+      height: 70px;
+      font-weight: 400;
+      font-size: 0.9em;
+      text-align: center;
+
+      img {
+        display: block;
+        height: 30px;
+        margin: 0 auto 5px;
+      }
+    }
+  }
+
+  &.btn-search {
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.2s linear 0s;
+
+    @include tablet {
+      display: none;
+    }
+
+    @include phone {
+      visibility: visible;
+      opacity: 1.0;
+      display: inline-block;
+      vertical-align: top;
+      width: 33.3%;
+      height: 70px;
+      margin-right: -4px;
+      padding-left: 12px;
+      padding-right: 12px;
+      font-weight: 400;
+      font-size: 0.9em;
+      text-align: center;
+
+      img {
+        display: block;
+        height: 30px;
+        margin: 0 auto 5px;
+      }
+    }
+  }
+
+  &.btn-basket {
+    display: none;
+    vertical-align: top;
+    width: 33.3%;
+    height: 70px;
+    margin-right: -4px;
+    padding-left: 12px;
+    padding-right: 12px;
+    font-weight: 400;
+    font-size: 0.9em;
+    text-align: center;
+
+    img {
+      display: block;
+      height: 30px;
+      margin: 0 auto 5px;
+    }
+
+    .count {
+      display: block;
+      position: absolute;
+      z-index: 2;
+      top: 50%;
+      right: 50%;
+      height: 25px;
+      width: 25px;
+      margin-top: -30px;
+      margin-right: -35px;
+      font-size: 0.7em;
+      font-weight: 400;
+      text-align: center;
+      line-height: 25px;
+      color: white;
+      background-color: $prime-color;
+      border-radius: 50%;
+    }
+
+    @include phone {
+      display: inline-block;
+    }
+  }
+}
+
+.promo-content {
+  .btn {
+    margin-top: 0;
+    &:hover {
+        margin-top: 2px;
+    }
+  }
+}
+
+.social {
+  margin-top: $standard-gap;
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: $standard-gap;
+  padding: 0;
+  list-style: none;
+  font-size: 1.1em;
+
+  li {
+    display: inline-block;
+    margin-right: calc(#{$standard-gap} / 5);
+
+    a {
+      display: block;
+      height: 35px;
+      width: 35px;
+      text-align: center;
+      line-height: 35px;
+      color: $prime-color;
+      background-color: $fourth-color;
+      border-radius: 50%;
+    }
+  }
+}
+
+.affix {
+  .btn-search {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.2s linear 0s;
+    float: right;
+    display: inline-block;
+    width: 50px;
+    height: 40px;
+    margin-top: 5px;
+    margin-right: 0;
+    padding: 5px;
+
+    &:hover, &:active, &:focus {
+      top: 0;
+    }
+
+    img {
+      height: 25px;
+      margin-top: 2px;
+    }
+
+    .txt {
+      display: none;
+    }
+
+    @media (max-width: 1019px) and (min-width: 992px) {
+      display: none;
+    }
+
+    @include tablet {
+      display: none;
+    }
+
+    @include phone {
+      float: none;
+      display: inline-block;
+      vertical-align: top;
+      width: 33.3%;
+      height: 70px;
+      margin-top: 0;
+      margin-right: -4px;
+      padding-left: 12px;
+      padding-right: 12px;
+      font-weight: 400;
+      font-size: 0.9em;
+      text-align: center;
+      box-shadow: none;
+
+      &:hover {
+        top: 2px;
+      }
+
+      img {
+        display: block;
+        height: 30px;
+        margin: 0 auto 5px;
+      }
+
+      .txt {
+        display: block;
+      }
+    }
+  }
+}
+
+.btn-group {
+  &.phone {
+    display: none;
+
+    .filters, .categories {
+      width: 50%;
+      font-size: 0.8em;
+    }
+
+    .side-menu {
+      width: 100%;
+      font-size: 0.8em;
+    }
+
+    @include phone {
+      display: block;
+      margin-bottom: $standard-gap;
+
+      &:after, &:before {
+        content: '';
+        display: table;
+        clear: both;
+      }
+    }
+  }
+}
+
+.btn-horizontal-group {
+  margin-top: $standard-gap;
+
+  .btn {
+    margin-right: #{$standard-gap / 2};
+  }
+}

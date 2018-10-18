@@ -1,0 +1,117 @@
+.breadcrumbs {
+  margin-top: calc(#{$standard-gap} / 2);
+  margin-bottom: calc(#{$standard-gap} / 2);
+  font-size: 0.8em;
+
+  @include phone {
+    margin-top: calc(#{$standard-gap} / 3);
+    margin-bottom: calc(#{$standard-gap} / 3);
+  }
+
+  a {
+    border-bottom: 0;
+  }
+
+  ol {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    font-family: $prime-font;
+    text-transform: uppercase;
+    list-style: none;
+    background-color: $second-color;
+
+    li {
+      position: relative;
+      z-index: 1;
+      display: inline-block;
+      vertical-align: middle;
+      height: 38px;
+      padding-top: calc(#{$standard-gap} / 3);
+      padding-left: $standard-gap;
+      padding-bottom: calc(#{$standard-gap} / 3);
+      padding-right: calc(#{$standard-gap} / 2);
+      color: white;
+
+      @include tablet-phone {
+        display: none;
+      }
+
+      i {
+        margin-right: 5px;
+      }
+
+      a {
+        color: white;
+      }
+
+      &:after {
+        position: absolute;
+        top: 0;
+        right: calc(#{$standard-gap} / -2);
+        content: '';
+        height: 38px;
+        width: 16px;
+        background-image: url('../images/icons/breadcrumb-break.svg');
+        background-size: cover;
+      }
+
+      &:nth-last-child(2) {
+        @include tablet-phone {
+          display: inline-block;
+          &:before {
+            content: 'Back to ';
+          }
+          &:after {
+            display: none;
+          }
+        }
+        @include phone {
+          padding-left: calc(#{$standard-gap} / 2);
+        }
+      }
+
+      &:first-of-type {
+        padding-left: calc(#{$standard-gap} / 2);
+        @include tablet {
+          display: inline-block;
+          &:before {
+            display: none;
+          }
+        }
+        @include phone {
+          display: none;
+          &:before {
+            display: none;
+          }
+        }
+      }
+
+      &:last-of-type {
+        z-index: 0;
+        background-color: lighten($second-color, 10%);
+        @include tablet-phone {
+          display: none;
+        }
+        &:after {
+          height: 0;
+          width: 0;
+          left: -3px;
+          border-style: solid;
+          border-width: 19px 0 19px 13px;
+          border-color: transparent transparent transparent $second-color;
+          background-image: none;
+        }
+      }
+
+      &.sep {
+        padding: 0;
+
+        img {
+          height: 38px;
+          width: auto;
+        }
+      }
+    }
+  }
+}

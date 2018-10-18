@@ -1,5 +1,4 @@
-const mix = require('laravel-mix');
-
+const { mix } = require('laravel-mix');
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -11,5 +10,12 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-   .sass('resources/sass/app.scss', 'public/css');
+mix.js(['resources/assets/js/app.js',
+    'resources/assets/js/misc.js',
+    'resources/assets/js/inview.js'], 'public/js/app.js')
+    .sass('resources/assets/sass/app.scss', 'public/css')
+
+    .copy('resources/assets/images', 'public/images')
+    .copy('resources/assets/js/fresco.js', 'public/js/fresco.js')
+    .sourceMaps()
+    .version();

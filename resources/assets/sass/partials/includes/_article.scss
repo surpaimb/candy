@@ -1,0 +1,17 @@
+.entry {
+  h3 {
+    margin-top: #{$standard-gap / 2} !important;
+  }
+
+  .excerpt {
+    margin-bottom: #{$standard-gap / 2} !important;
+  }
+}
+
+.video-entry {
+  margin-bottom: $standard-gap;
+
+  a {
+    border-bottom: 0;
+  }
+}

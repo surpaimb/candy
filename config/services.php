@@ -13,6 +13,12 @@ return [
     | to have a conventional place to find your various credentials.
     |
     */
+    'ecommerce_api' => [
+        'baseURL' => env('CANDY_API_URL', 'http://candy-store.test/'),
+        'verify' => env('CANDY_API_VERIFY', true),
+        'client_id' => env('CANDY_API_ID', ''),
+        'client_secret' => env('CANDY_API_SECRET', ''),
+    ],
 
     'mailgun' => [
         'domain' => env('MAILGUN_DOMAIN'),
@@ -22,7 +28,7 @@ return [
     'ses' => [
         'key' => env('SES_KEY'),
         'secret' => env('SES_SECRET'),
-        'region' => env('SES_REGION', 'us-east-1'),
+        'region' => 'us-east-1',
     ],
 
     'sparkpost' => [

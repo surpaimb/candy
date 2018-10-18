@@ -1,0 +1,10 @@
+.element {
+  &.panel {
+    padding-top: $standard-gap;
+    padding-bottom: $standard-gap;
+    background: white;
+    -webkit-box-shadow: 0 3px 5px 0 rgba(red(lighten($second-color, 30%)), green(lighten($second-color, 30%)), blue(lighten($second-color, 30%)),0.8);
+    box-shadow: 0 3px 5px 0 rgba(red(lighten($second-color, 30%)), green(lighten($second-color, 30%)), blue(lighten($second-color, 30%)),0.8);
+    border-radius: 0;
+  }
+}

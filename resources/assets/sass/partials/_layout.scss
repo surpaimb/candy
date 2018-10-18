@@ -1,0 +1,218 @@
+/* Elements
+
+Commonly elements that hold content
+
+***********************************************/
+
+.element {
+  padding: $standard-gap;
+  margin-bottom: $standard-gap;
+  border-bottom: 0;
+
+  @include phone {
+    box-shadow: none !important;
+  }
+
+  &.standard {
+    background-color: white;
+    -webkit-box-shadow: 0 3px 5px 0 rgba(red(lighten($second-color, 30%)), green(lighten($second-color, 30%)), blue(lighten($second-color, 30%)),0.8);
+    box-shadow: 0 3px 5px 0 rgba(red(lighten($second-color, 30%)), green(lighten($second-color, 30%)), blue(lighten($second-color, 30%)),0.8);
+  }
+}
+
+/* Container
+***********************************************/
+
+.container-fluid {
+  padding-left: #{$standard-gap * 4};
+  padding-right: #{$standard-gap * 4};
+
+  @include x-desktop {
+    padding-left: $standard-gap;
+    padding-right: $standard-gap;
+  }
+
+  @include desktop {
+    padding-left: #{$standard-gap / 2};
+    padding-right: #{$standard-gap / 2};
+  }
+
+  @include tablet {
+    padding-left: #{$standard-gap / 2};
+    padding-right: #{$standard-gap / 2};
+  }
+
+  @include phone {
+    padding-left: #{$standard-gap / 2};
+    padding-right: #{$standard-gap / 2};
+  }
+
+  &.push-top {
+    margin-top: $standard-gap;
+
+    @include tablet-phone {
+      margin-top: $standard-gap;
+    }
+  }
+}
+
+/* Overides
+***********************************************/
+
+nav {
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    li {
+      display: inline-block;
+    }
+  }
+
+  &.vertical {
+    ul {
+      li {
+        display: block;
+      }
+    }
+  }
+}
+
+/* Top
+***********************************************/
+
+@import "includes/top";
+
+/* Header
+***********************************************/
+
+@import "includes/header";
+
+/* Navigation
+***********************************************/
+
+@import "includes/navigation";
+
+/* Promotions
+***********************************************/
+
+@import "includes/promotions";
+
+/* Banner
+***********************************************/
+
+@import "includes/banner";
+
+/* Breadcrumbs
+***********************************************/
+
+@import "includes/breadcrumbs";
+
+/* Newsletter
+***********************************************/
+
+@import "includes/newsletter";
+
+/* Social Links
+***********************************************/
+
+@import "includes/social-links";
+
+/* Page Content
+
+Generic and Homepage Styles
+
+***********************************************/
+
+@import "includes/generic-page-content";
+
+/* Product Global Styles
+**********************************************/
+
+@import "includes/product-globals";
+
+/* Sidebar
+***********************************************/
+
+@import "includes/sidebar";
+
+/* Product Template
+***********************************************/
+
+@import "includes/product";
+
+/* Product Listings / Search Results
+***********************************************/
+
+@import "includes/product-listing";
+
+/* Category Template
+***********************************************/
+
+@import "includes/category";
+
+/* Article Template
+***********************************************/
+
+@import "includes/article";
+
+/* Adverts
+***********************************************/
+
+@import "includes/adverts";
+
+/* Basket Template
+***********************************************/
+
+@import "includes/basket";
+
+/* Checkout Template
+***********************************************/
+
+@import "includes/checkout";
+
+/* Account Template
+***********************************************/
+
+@import "includes/account";
+
+/* Footer
+***********************************************/
+
+@import "includes/footer";
+
+/* Copyright
+***********************************************/
+
+@import "includes/copyright";
+
+/* Modals
+***********************************************/
+
+@import "includes/modals";
+
+
+/* Panel
+***********************************************/
+
+@import "includes/panel";
+
+/* Vue
+***********************************************/
+
+@import "includes/vue";
+
+/* Lightbox (Lity)
+***********************************************/
+
+@import "includes/lightbox";
+
+.modal .product-thumbnail {
+  max-width: 140px;
+}
+
+.modal.show {
+        display: block!important;
+        opacity: 1;
+    }
+  

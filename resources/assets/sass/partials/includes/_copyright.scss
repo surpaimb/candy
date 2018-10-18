@@ -1,0 +1,26 @@
+.copyright {
+  margin-top: calc(#{$standard-gap} * 2);
+  margin-bottom: $standard-gap;
+  font-size: 0.8em;
+  color: lighten($second-color, 15%);
+
+  a {
+    color: lighten($second-color, 15%);
+
+     &:visited {
+      color: lighten($second-color, 15%);
+    }
+
+    &:hover {
+      color: lighten($second-color, 15%);
+    }
+
+    &:focus {
+      color: lighten($second-color, 15%);
+    }
+
+    &:active {
+      color: lighten($second-color, 15%);
+    }
+  }
+}

@@ -3,37 +3,73 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\Http\Requests\LoginRequest;
+
+use App\Api\Auth\Services\UserService;
+use App\Api\Basket\Services\BasketService;
+
+use GuzzleHttp\Exception\ClientException;
+use Session;
+use Auth;
+use GetCandyClient;
 
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
+    protected $baskets;
+    protected $users;
 
-    use AuthenticatesUsers;
-
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/home';
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public function __construct(BasketService $baskets, UserService $users)
     {
-        $this->middleware('guest')->except('logout');
+        parent::__construct();
+
+        $this->baskets = $baskets;
+        $this->users = $users;
+    }
+
+    public function index()
+    {
+        return view('auth/login');
+    }
+
+    public function login(LoginRequest $request)
+    {
+        try {
+            $this->users->login($request->only(['email','password']));
+        } catch(\Exception $e) {
+            if ($request->ajax()) {
+                return response()->json(json_decode($e->getResponse()->getBody()->getContents()), 400);
+            }else {
+                return back()->withErrors(json_decode($e->getResponse()->getBody()->getContents()))->withInput();
+            }
+        }
+        $user = $this->users->current();
+
+        // If we have a basket, attach it to the current user...
+        if (Session::has('basket_id')) {
+            $this->baskets->addUser(
+                Session::get('basket_id'),
+                $user['data']['id']
+            );
+        }
+
+        if ($request->ajax()) {
+            return response()->json(['message' => 'Successfully logged in'], 200);
+        } else {
+            return redirect('/account')->with('status', 'Successfully logged in');
+        }
+    }
+
+    public function logout()
+    {
+        if (Session::has('basket_id')) {
+            $this->baskets->removeUser(
+                Session::get('basket_id'),
+                Session::get('user')['id']
+            );
+        }
+
+        $this->users->logout();
+
+        return redirect('/')->with('status', 'Successfully logged out');
     }
 }

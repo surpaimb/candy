@@ -1,0 +1,22 @@
+.advert {
+  position: relative;
+  width: 100%;
+  min-height: 300px;
+  margin-top: $standard-gap;
+  background-color: $fourth-color;
+
+  .placeholder {
+    display: block;
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    left: 50%;
+    width: 80%;
+    text-align: center;
+    -webkit-transform: translateX(-50%) translatey(-50%);
+    -moz-transform: translateX(-50%) translatey(-50%);
+    -ms-transform: translateX(-50%) translatey(-50%);
+    transform: translateX(-50%) translatey(-50%);
+    vertical-align: middle;
+  }
+}

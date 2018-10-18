@@ -1,0 +1,58 @@
+$phone-width: 768px;
+$tablet-width: 992px;
+$desktop-width: 1200px;
+$x-desktop-width: 1400px;
+
+
+@mixin phone {
+  @media (max-width: #{$phone-width - 1px}) {
+    @content;
+  }
+}
+
+@mixin tablet-phone {
+  @media (max-width: #{$tablet-width} - 1px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: #{$phone-width}) and (max-width: #{$tablet-width} - 1px) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: #{$tablet-width}) and (max-width: #{$desktop-width} - 1px) {
+    @content;
+  }
+}
+
+@mixin x-desktop {
+  @media (min-width: #{$desktop-width}) and (max-width: #{$x-desktop-width} - 1px) {
+    @content;
+  }
+}
+
+@mixin transition($transition){
+    -webkit-transition: $transition;
+    transition: $transition;
+}
+
+
+@mixin transition($transitions...){
+    $unfoldedTransitions: ();
+    @each $transition in $transitions{
+        $unfoldedTransitions: append($unfoldedTransitions, $transition, comma);
+    }
+
+    -webkit-transition: $unfoldedTransitions;
+    transition: $unfoldedTransitions;
+}
+
+@mixin linear-gradient($color-start, $color-stop) {
+  background: rgb(red($color-start), green($color-start), blue($color-start));
+  background: -moz-linear-gradient(top, rgba(red($color-start), green($color-start), blue($color-start),1) 0%, rgba(red($color-stop), green($color-stop), blue($color-stop),1) 100%);
+  background: -webkit-linear-gradient(top, rgba(red($color-start), green($color-start), blue($color-start),1) 0%,rgba(red($color-stop), green($color-stop), blue($color-stop),1) 100%);
+  background: linear-gradient(to bottom, rgba(red($color-start), green($color-start), blue($color-start),1) 0%,rgba(red($color-stop), green($color-stop), blue($color-stop),1) 100%);
+}

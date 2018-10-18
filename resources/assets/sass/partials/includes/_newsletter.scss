@@ -1,0 +1,129 @@
+.newsletter {
+  position: relative;
+  margin-bottom: 0;
+  padding-bottom: $standard-gap;
+  font-family: $prime-font;
+  color: lighten($second-color, 25%);
+  background-color: $second-color;
+
+  @include phone {
+    margin-bottom: 0 !important;
+  }
+
+  p {
+    margin-bottom: 0;
+  }
+
+  .lead {
+    font-weight: 400;
+    font-size: 2em;
+    color: white;
+  }
+
+  .newsletter-content {
+
+    @include tablet {
+      margin-bottom:  calc(#{$standard-gap} / 2);
+    }
+
+    @include phone {
+      margin-bottom: calc(#{$standard-gap} / 2);
+      text-align: center;
+    }
+  }
+
+  .social-media {
+    a {
+      border-bottom: 0;
+    }
+
+    @include phone {
+      margin-top: calc(#{$standard-gap} / 2);
+      text-align: center;
+    }
+  }
+
+  .reviews {
+    #badge-200 {
+      min-height: 170px;
+    }
+
+    @include tablet {
+      margin-top: $standard-gap;
+    }
+
+    @include phone {
+      margin-top: $standard-gap;
+
+      #badge-200 {
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+  }
+
+  .feature-img {
+    img {
+      width: 150%;
+      margin-top: -#{$standard-gap * 4};
+    }
+  }
+
+  .newsletter-img {
+    position: absolute;
+    z-index: 2;
+    right: -105px;
+    top: -120px;
+
+    @include tablet-phone {
+      display: none;
+    }
+  }
+
+  .newsletter-txt {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    margin-bottom: calc(#{$standard-gap} / 3);
+  }
+
+  .form-control {
+    height: 60px;
+    font-size: 1em;
+    font-style: italic;
+    color: white;
+    border: 0;
+    background-color: lighten($second-color, 15%);
+
+    &::-webkit-input-placeholder { /* Chrome */
+      color: lighten($second-color, 45%);
+    }
+
+    &:-ms-input-placeholder { /* IE 10+ */
+      color:  lighten($second-color, 45%);
+    }
+
+    &::-moz-placeholder { /* Firefox 19+ */
+      color:  lighten($second-color, 45%);
+      opacity: 1;
+    }
+
+    &:-moz-placeholder { /* Firefox 4 - 18 */
+      color:  lighten($second-color, 45%);
+      opacity: 1;
+    }
+  }
+
+  .input-group {
+
+    .input-group-btn {
+      vertical-align: top;
+    }
+
+    .btn {
+      height: 60px;
+      margin-left: 0;
+      border: 0;
+    }
+  }
+}

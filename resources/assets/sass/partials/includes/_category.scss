@@ -1,0 +1,32 @@
+.element {
+  &.category {
+    background: white;
+    -webkit-box-shadow: 0 3px 5px 0 rgba(red(lighten($second-color, 30%)), green(lighten($second-color, 30%)), blue(lighten($second-color, 30%)),0.8);
+    box-shadow: 0 3px 5px 0 rgba(red(lighten($second-color, 30%)), green(lighten($second-color, 30%)), blue(lighten($second-color, 30%)),0.8);
+
+    .product-title {
+      font-size: 1em;
+    }
+
+    @include tablet-phone {
+      .product-img, .product-details {
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: -4px;
+      }
+
+      .product-img {
+        display: inline-block;
+        width: 120px;
+      }
+
+      .product-details {
+        display: inline-block;
+        width: calc(100% - 120px);
+        text-align: left;
+        padding-top: 0;
+        padding-bottom: 0;
+      }
+    }
+  }
+}

@@ -1,0 +1,130 @@
+.modal-backdrop {
+  background-color: $prime-color;
+
+  &.in {
+    opacity: 0.8;
+  }
+}
+
+.modal_call-out {
+  display: block;
+  font-size: 1.2em;
+}
+
+.modal-content {
+  overflow: hidden;
+  font-family: $prime-font;
+  border: 1px solid $prime-color;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 0 30px rgba(137, 77, 184,1);
+  box-shadow: 0 0 30px rgba(137, 77, 184,1);
+
+  .modal-header {
+    background-color: $prime-color;
+    color: white;
+
+    h1, .h1, h2, .h2, h3, .h3 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 400;
+      color: white;
+    }
+
+    a {
+      color: white;
+    }
+  }
+
+  .wave {
+    margin-top: -10px;
+  }
+
+  .modal-body {
+    &.checkout {
+      padding-top: #{$standard-gap * 4};
+      padding-bottom: #{$standard-gap * 4};
+      text-align: center;
+      color: white;
+      background-image: url('../images/getcandy/basket/login-modal.png');
+      background-size: cover;
+      background-position: center;
+      background-color: darken($prime-color, 10%);
+    }
+
+    &.login {
+      padding-top: $standard-gap;
+      padding-left: #{$standard-gap * 2};
+      padding-bottom: $standard-gap;
+      padding-right: #{$standard-gap * 2};
+
+      .btn {
+        margin-top: #{$standard-gap / 2};
+      }
+
+      .forgotten-password {
+        margin-top: #{$standard-gap / 3};
+      }
+    }
+
+    &.saved-basket {
+      padding-top: $standard-gap;
+      padding-bottom: 330px;
+      text-align: center;
+      background-image: url('../images/getcandy/basket/saved-basket.jpg');
+      background-repeat: no-repeat;
+      background-position: bottom center;
+      background-size: 100% auto;
+
+      .focus {
+        margin-top: #{$standard-gap / 2};
+        margin-bottom: #{$standard-gap / 2};
+        font-size: 1.6em;
+        line-height: 1.2;
+        color: $second-color;
+      }
+    }
+
+    &.eu-switch {
+      padding-top: $standard-gap;
+      padding-bottom: 330px;
+      text-align: center;
+      background-repeat: no-repeat;
+      background-position: bottom center;
+      background-size: 100% auto;
+
+      .focus {
+        margin-top: #{$standard-gap / 2};
+        margin-bottom: #{$standard-gap / 2};
+        font-size: 1.6em;
+        line-height: 1.2;
+        color: $second-color;
+      }
+    }
+
+
+    .quick-basket {
+      margin-bottom: $standard-gap;
+
+      [class*="col-"] {
+        display: inline-block;
+        float: none;
+        margin-right: -4px;
+      }
+    }
+  }
+
+  .modal-footer {
+    text-align: center;
+    color: $prime-color;
+    background-color: white;
+
+    small {
+      display: block;
+    }
+
+    a {
+      color: $prime-color;
+    }
+  }
+}

@@ -2,71 +2,43 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Foundation\Auth\RegistersUsers;
+use App\Http\Requests\RegisterRequest;
+
+use App\Api\Auth\Services\UserService;
+
+use GuzzleHttp\Exception\ClientException;
+use GetCandyClient;
 
 class RegisterController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Register Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users as well as their
-    | validation and creation. By default this controller uses a trait to
-    | provide this functionality without requiring any additional code.
-    |
-    */
+    protected $users;
 
-    use RegistersUsers;
-
-    /**
-     * Where to redirect users after registration.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/home';
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public function __construct(UserService $users)
     {
-        $this->middleware('guest');
+        parent::__construct();
+
+        $this->users = $users;
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
+    public function index()
     {
-        return Validator::make($data, [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
-        ]);
+        return view('auth/register');
     }
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\User
-     */
-    protected function create(array $data)
+    public function register(RegisterRequest $request)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+        $customer = $request->only(['firstname', 'lastname', 'email', 'password', 'password_confirmation', 'language']);
+        $customer['group'] = 'retail';
+
+        try {
+            $response = GetCandyClient::Customers()->create($customer);
+            $this->users->login($request->only(['email','password']));
+        } catch (ClientException  $e) {
+            return back()->withErrors(json_decode($e->getResponse()->getBody()->getContents()))->withInput();
+        }
+
+        return redirect('/account')->with('status', 'Successfully logged in');
+
     }
 }

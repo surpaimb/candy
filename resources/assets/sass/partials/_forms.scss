@@ -1,0 +1,374 @@
+/* Form Base Styles
+***********************************************/
+
+input {
+  outline: none;
+}
+
+.form-inline {
+  p {
+    display: inline-block;
+  }
+}
+
+.form-control {
+  height: 41px;
+  font-family: $prime-font;
+  box-shadow: none;
+  background-color: darken(white, 3%);
+  border-radius: 4px;
+  border: 1px solid darken(white, 15%);
+  box-shadow: inset 2px 2px 10px 0px rgba(0,0,0,0.1);
+
+  &:focus {
+    box-shadow: none;
+  }
+
+  &.form-control-sm {
+    height: 43px;
+  }
+
+  &.form-control-lg {
+    height: 51px;
+  }
+}
+
+label {
+  font-family: $prime-font;
+  font-weight: 400;
+}
+
+/* Custom Checkboxes
+***********************************************/
+
+/* Search Filters */
+
+.filter-list {
+  .checkbox {
+    input[type="checkbox"] {
+      display: none;
+    }
+
+    label {
+      padding: 0;
+      margin: 0;
+
+      span {
+        position: relative;
+        padding-left: $standard-gap;
+        color: $prime-color;
+
+        &:before {
+          content: '';
+          position: absolute;
+          top: -2px;
+          left: 0;
+          height: 20px;
+          width: 20px;
+          text-align: center;
+          line-heiht: 20px;
+          border: 1px solid $prime-color;
+        }
+      }
+
+      input[type="checkbox"]:checked {
+        + span {
+          &:before {
+            content: '\f00c';
+            font-size: 0.8em;
+            font-family: FontAwesome;
+            color: white;
+            background-color: $fourth-color;
+            border: 1px solid darken($fourth-color, 7%);
+          }
+        }
+      }
+    }
+  }
+}
+
+/* Custom Radio
+***********************************************/
+
+/* Product Variations - Radio */
+
+.variation-radio {
+  display: inline-block;
+  margin-right: 10px;
+
+  input[type="radio"] {
+    display: none;
+  }
+
+
+  label {
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+
+    span {
+      position: relative;
+      display: block;
+      top: 0;
+      height: 41px;
+      margin: 0;
+      padding: 0 15px;
+      font-family: $prime-font;
+      line-height: 41px;
+      background-color: darken(white, 3%);
+      border-radius: 4px;
+      border: 1px solid darken(white, 15%);
+    }
+
+    &:hover {
+      span {
+      }
+    }
+
+    input[type="radio"]:checked {
+      + span {
+        color: white;
+        background-color: $second-color;
+        @include linear-gradient ($second-color, darken($second-color, 5%));
+        border-color: darken($second-color, 10%);
+      }
+    }
+  }
+}
+
+/* Large Radio */
+
+.custom-radio {
+  input[type="radio"] {
+    display: none;
+  }
+
+  label {
+    position: relative;
+    padding-left: 45px;
+    margin-bottom: #{$standard-gap / 2};
+
+    span {
+      font-size: 1.2em;
+      color: $second-color;
+
+      small {
+        display: block;
+        color: $copy-color;
+      }
+
+      &:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 5px;
+        display: block;
+        width: 30px;
+        height: 30px;
+        border: 1px solid #9e9e9e;
+        border-radius: 50%;
+      }
+    }
+
+    input[type="radio"]:checked {
+      + span {
+        &:before {
+          background: $second-color;
+          border-color: $prime-color;
+        }
+
+        &:after {
+          content: '';
+          position: absolute;
+          top: 15px;
+          left: 10px;
+          display: block;
+          width: 10px;
+          height: 10px;
+          background: white;
+          border: 1px solid $prime-color;
+          border-radius: 50%;
+        }
+      }
+    }
+  }
+}
+
+.inline-radio-list {
+  .custom-radio {
+    display: inline-block;
+    vertical-align: top;
+    width: 20%;
+    margin-top: 0;
+    margin-right: -4px;
+    text-align: center;
+
+    label {
+      width: 100%;
+      padding-left:0;
+      padding-top: 45px;
+
+      span {
+        &:before {
+          left: calc(50% - 15px);
+        }
+      }
+
+      input[type="radio"]:checked {
+        + span {
+          &:after {
+            left: calc(50% - 5px);
+          }
+        }
+      }
+    }
+  }
+}
+
+/* Toggle Radio
+***********************************************/
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 26px;
+
+  input {
+    display:none;
+  }
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: darken($prime-color, 15%);
+  border: 1px solid lighten($prime-color, 10%);
+  border-radius: 26px;
+  -webkit-transition: .4s;
+  transition: .4s;
+
+  &:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 2px;
+    bottom: 2px;
+    background: rgb(255,255,255);
+    background: -moz-linear-gradient(top, rgba(255,255,255,1) 50%, rgba(247,247,247,1) 51%, rgba(247,247,247,1) 51%);
+    background: -webkit-linear-gradient(top, rgba(255,255,255,1) 50%,rgba(247,247,247,1) 51%,rgba(247,247,247,1) 51%);
+    background: linear-gradient(to bottom, rgba(255,255,255,1) 50%,rgba(247,247,247,1) 51%,rgba(247,247,247,1) 51%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f7f7f7',GradientType=0 );
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 50%;
+  }
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(22px);
+  -ms-transform: translateX(22px);
+  transform: translateX(22px);
+}
+
+/* Custom Select
+***********************************************/
+
+.custom-select {
+  height: 41px;
+
+  &.full-width {
+    display: block;
+  }
+}
+
+@supports (pointer-events: none) and
+    ((-webkit-appearance: none) or
+    (-moz-appearance: none) or
+    (appearance: none)) {
+
+  .custom-select {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    font-weight: 400;
+
+    &:before, &:after {
+      content: "";
+      position: absolute;
+      pointer-events: none;
+    }
+
+    &:after {
+      content: "\25BC";
+      height: 1em;
+      right: 18px;
+      top: 50%;
+      margin-top: -.5em;
+      color: white;
+      font-size: .525em;
+      line-height: 1;
+      transition: top 0.2s ease 0s;
+    }
+
+    &:before {
+      top: 0;
+      width: 41px;
+      height: 100%;
+      right: 0px; top: 0; bottom: 0;
+      background-color: $second-color;
+      @include linear-gradient ($second-color, darken($second-color, 5%));
+      border: 1px solid darken($second-color, 5%);
+      border-top-right-radius: 4px;
+      border-bottom-right-radius: 4px;
+      box-shadow: 0px 0px 0px 0px lighten($second-color, 10%);
+      transition: box-shadow 0.2s ease 0s;
+    }
+
+    &:hover, &:focus {
+      &:after {
+        top: 50%;
+        transition: top 0.2s ease 0s
+      }
+
+      &:before {
+        top: 0;
+        box-shadow: 0px 0px 10px 0px lighten($second-color, 10%);
+        transition: box-shadow 0.2s ease 0s,;
+      }
+    }
+
+    .custom-dropdown {
+      height: 100%;
+      padding-right: 53px;
+      font-size: 1em;
+      border-top-left-radius: 4px;
+      border-bottom-left-radius: 4px;
+      background-color: darken(white, 3%);
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      cursor: pointer;
+
+      @media (max-width: 1259px) {
+        font-size: 0.8em;
+      }
+    }
+  }
+
+  /* FF only temp fix */
+  @-moz-document url-prefix() {
+    .custom-dropdown       { padding-right: .9em }
+    /*.custom-dropdown--large .custom-dropdown { padding-right: 1.3em }*/
+    /*.custom-dropdown--small .custom-dropdown { padding-right: .5em }*/
+  }
+}

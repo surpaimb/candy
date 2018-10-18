@@ -1,0 +1,140 @@
+@import "../modules/all";
+
+html {
+  overflow-x: hidden;
+}
+
+body {
+  position: relative;
+  font-size: $base;
+  font-family: $second-font;
+  color: $copy-color;
+  background-color: darken(white, 3%);
+
+  @include desktop {
+    font-size: calc(#{$base} - 1px);
+  }
+
+  @include tablet {
+    font-size: calc(#{$base} - 1px);
+  }
+}
+
+h1, .h1 {
+  font-size: $h1;
+
+  @include tablet {
+    font-size: #{$h1 - 10px};
+  }
+}
+
+h2, .h2 {
+  font-size: $h2;
+
+  @include tablet {
+    font-size: #{$h2 - 8px};
+  }
+}
+
+h3, .h3 {
+  font-size: $h3;
+}
+
+h4, .h4 {
+  font-size: $h4;
+}
+
+h5, .h5, h6, .h6 {
+  font-size: $h5;
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: $prime-font;
+    font-weight: 400;
+    color: $prime-color;
+
+    &.lighten {
+      color: $second-color;
+    }
+}
+
+h1, .h1 {
+    margin-bottom: $standard-gap;
+
+    &.small {
+      font-size: #{$h1 / 1.2};
+
+      @include tablet {
+        font-size: #{$h1 / 1.4};
+      }
+
+      @include phone {
+        font-size: #{$h1 / 1.6};
+      }
+    }
+}
+
+h2, .h2 {
+    margin-bottom: $standard-gap;
+
+    &.small {
+      font-size: #{$h2 / 1.2};
+
+      @include tablet {
+        font-size: #{$h2 / 1.4};
+      }
+
+      @include phone {
+        font-size: #{$h2 / 1.6};
+      }
+    }
+}
+
+.numeric {
+  margin-left: 2px;
+  font-size: 1em;
+  font-weight: 400;
+  display: inline-block;
+  display: -moz-inline-stack;
+
+  .numeric-lg {
+    font-size: 1.2em;
+    font-weight: 700;
+  }
+
+  &::first-letter { 
+    font-size: 0.7em!important; 
+    margin-right: 1px;
+  }
+}
+
+.loading {
+  text-align: center;
+  margin-bottom: 25px;
+
+  i {
+    color: #1790d5;
+  }
+
+  strong {
+    color: #026aa5;
+    top: -10px;
+    position: relative;
+  }
+}
+
+.form-group .error {
+  color: red;
+  font-size: 12px;
+  margin-top: 3px;
+}
+
+
+
+.normal {
+  font-weight: 400;
+}
+
+.lead {
+    margin-bottom: $standard-gap;
+}
