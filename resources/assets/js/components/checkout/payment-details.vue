@@ -141,13 +141,13 @@
                         </div>
                     </transition>
 
-                    <template v-if="hasType('offline')">
+                    <template v-if="hasType('Offline')">
                         <button class="btn btn-sm btn-primary" @click="payOnAccount()">Pay on account</button>
                         <button class="btn btn-sm btn-green" @click="payNow()" >Pay now</button>
                         <hr>
                     </template>
 
-                    <div :class="{'hidden' : onAccount || hasType('offline') && !chosen}">
+                    <div :class="{'hidden' : onAccount || hasType('Offline') && !chosen}">
                         <transition name="fade-in">
                             <div class="alert alert-danger" role="alert" v-show="paymentStatus == 'declined'">
                                 <i class="fa fa-exclamation-circle"></i>
@@ -178,7 +178,7 @@
                         </div>
                         <div id="nonce"></div>
                     </div>
-                    <div :class="{'hidden' : !onAccount}" v-if="hasType('offline')">
+                    <div :class="{'hidden' : !onAccount}" v-if="hasType('Offline')">
                         <div class="alert alert-info">
                             <p>You have chosen to pay on account, an invoice will be generated and sent to you.</p>
                         </div>
@@ -201,195 +201,231 @@
 </template>
 
 <script>
+export default {
+  props: {
+    regions: {
+      type: Array,
+      default: [],
+    },
+    prefill: {
+      type: Object,
+      default: {},
+    },
+    auth: {
+      type: String,
+      default: '',
+    },
+  },
+  data() {
+    return {
+      oldBillingAddress: [],
+      useDeliveryAddress: false,
+      paymentTotal: 0,
+      errors: {},
+      paymentStatus: '',
+      isProccessing: false,
+      braintreeDropin: null,
+      chosen: false,
+      onAccount: true,
+      popularCountries: ['United Kingdom'],
+    };
+  },
+  watch: {
+    useDeliveryAddress: function(useDelivery) {
+      if (useDelivery) {
+        this.$store.commit('setDeliveryBillingAddress');
+      } else {
+        this.$store.commit('clearBillingAddress');
+      }
+    },
+    orderTotal: function(val) {
+      //this.buildForm(val);
+    },
+  },
+  computed: {
+    paymentTypes() {
+      return this.$store.state.checkout.paymentTypes;
+    },
+    billingPanel() {
+      return this.$store.state.checkout.panel.billingAddress;
+    },
+    paymentPanel() {
+      return this.$store.state.checkout.panel.paymentDetails;
+    },
+    basket() {
+      return this.$store.state.basket;
+    },
+    deliveryAddress() {
+      return this.$store.state.order.deliveryAddress;
+    },
+    billingAddress() {
+      return this.$store.state.order.billingAddress;
+    },
+    basketCount() {
+      return this.$store.getters.basketCount;
+    },
+    basketTotal() {
+      return this.$store.getters.basketTotal;
+    },
+    orderTotal() {
+      return this.$store.getters.orderTotal;
+    },
+    order() {
+      return this.$store.state.order;
+    },
+  },
+  mounted() {
+    var button = document.querySelector('#submit-button');
+    this.oldBillingAddress = this.billingAddress;
+    // this.buildForm();
+    this.$store.dispatch('orderPrefill', {
+      panel: 'billingAddress',
+      data: this.prefill['billing'],
+    });
+    this.$store.dispatch('getPaymentTypes');
 
-    export default {
-        props: {
-            regions: {
-                type: Array,
-                default: []
-            },
-            prefill: {
-                type: Object,
-                default: {}
-            },
-            auth: {
-                type: String,
-                default: ''
-            }
+    this.$store.commit('setVatNo', this.prefill['vat_no']);
+    this.$store.commit('setOrderTotal', this.prefill['total']);
+    this.$store.commit('setOrderTax', this.prefill['vat']);
+  },
+  methods: {
+    hasType(type) {
+      return this.getPaymentType(type);
+    },
+    countries(region) {
+      return _.filter(region.countries.data, item => {
+        return !(this.popularCountries.indexOf(item.name.en) >= 0);
+      });
+    },
+    getPaymentType(type) {
+      let item = _.find(this.paymentTypes.data, item => {
+        return item.driver == type;
+      });
+      return item;
+    },
+    payOnAccount() {
+      this.onAccount = true;
+      this.chosen = true;
+    },
+    payNow() {
+      this.chosen = true;
+      this.onAccount = false;
+    },
+    submitOnAccount() {
+      let type = this.getPaymentType('Offline');
+
+      this.paymentStatus = '';
+      this.isProccessing = true;
+
+      this.$store
+        .dispatch('postPaymentDetails', {
+          type: type.id,
+        })
+        .then(response => {
+          window.location.replace('/checkout/confirmation');
+        })
+        .catch(error => {
+          this.paymentStatus = 'error';
+          this.isProccessing = false;
+        });
+    },
+    buildForm(price) {
+      var _this = this;
+      CandyEvent.$on('submitPayment', function() {
+        _this.isProccessing = true;
+        _this.$store
+          .dispatch('postPaymentDetails', {
+            token: payload.nonce,
+          })
+          .then(response => {
+            window.location.replace('/checkout/confirmation');
+          })
+          .catch(error => {
+            _this.paymentStatus = 'declined';
+            _this.isProccessing = false;
+          });
+      });
+    },
+    _buildForm(price) {
+      if (this.braintreeDropin) {
+        this.braintreeDropin.teardown();
+        CandyEvent.$off('submitPayment');
+      }
+
+      braintree.dropin.create(
+        {
+          authorization: this.auth,
+          container: '#dropin-container',
+          paypal: {
+            container: 'paypal-container',
+            singleUse: true,
+            flow: 'checkout',
+            amount: price, // Required
+            currency: 'GBP', // Required
+            headless: true,
+          },
         },
-        data() {
-            return {
-                oldBillingAddress: [],
-                useDeliveryAddress: false,
-                paymentTotal: 0,
-                errors: {},
-                paymentStatus: '',
-                isProccessing: false,
-                braintreeDropin: null,
-                chosen: false,
-                onAccount: false,
-                popularCountries: [
-                    'United Kingdom'
-                ]
-            }
+        (ce, i) => {
+          this.braintreeDropin = i;
+          var createErr = ce;
+          var _this = this;
+
+          CandyEvent.$on('submitPayment', function() {
+            _this.braintreeDropin.requestPaymentMethod(function(err, payload) {
+              if (payload) {
+                _this.isProccessing = true;
+                _this.$store
+                  .dispatch('postPaymentDetails', {
+                    token: payload.nonce,
+                  })
+                  .then(response => {
+                    window.location.replace('/checkout/confirmation');
+                  })
+                  .catch(error => {
+                    _this.paymentStatus = 'declined';
+                    _this.isProccessing = false;
+                  });
+              } else {
+                _this.paymentStatus = 'missing_payment_method';
+              }
+            });
+          });
         },
-        watch: {
-            useDeliveryAddress: function (useDelivery) {
-                if (useDelivery) {
-                    this.$store.commit('setDeliveryBillingAddress');
-                } else {
-                    this.$store.commit('clearBillingAddress');
-                }
-            },
-            orderTotal: function (val) {
-                this.buildForm(val);
-            }
-        },
-        computed: {
-            paymentTypes() {
-                return this.$store.state.checkout.paymentTypes;
-            },
-            billingPanel() {
-                return this.$store.state.checkout.panel.billingAddress;
-            },
-            paymentPanel() {
-                return this.$store.state.checkout.panel.paymentDetails;
-            },
-            basket() {
-                return this.$store.state.basket;
-            },
-            deliveryAddress() {
-                return this.$store.state.order.deliveryAddress;
-            },
-            billingAddress() {
-                return this.$store.state.order.billingAddress;
-            },
-            basketCount() {
-                return this.$store.getters.basketCount;
-            },
-            basketTotal() {
-                return this.$store.getters.basketTotal;
-            },
-            orderTotal() {
-                return this.$store.getters.orderTotal;
-            },
-            order() {
-                return this.$store.state.order;
-            }
-        },
-        mounted() {
-            var button = document.querySelector('#submit-button');
-            this.oldBillingAddress = this.billingAddress;
-            // this.buildForm();
-            this.$store.dispatch('orderPrefill', {'panel': 'billingAddress', 'data': this.prefill['billing']});
-            this.$store.dispatch('getPaymentTypes');
-
-            this.$store.commit('setVatNo', this.prefill['vat_no']);
-            this.$store.commit('setOrderTotal', this.prefill['total']);
-            this.$store.commit('setOrderTax', this.prefill['vat']);
-        },
-        methods: {
-            hasType(type) {
-                return this.getPaymentType(type);
-            },
-            countries(region) {
-                return _.filter(region.countries.data, item => {
-                    return !(this.popularCountries.indexOf(item.name.en) >= 0);
-                });
-            },
-            getPaymentType(type) {
-                let item = _.find(this.paymentTypes.data, item => {
-                    return item.driver == type;
-                });
-                return item;
-            },
-            payOnAccount() {
-                this.onAccount = true;
-                this.chosen = true;
-            },
-            payNow() {
-                this.chosen = true;
-                this.onAccount = false;
-            },
-            submitOnAccount() {
-                let type = this.getPaymentType('offline');
-
-                this.paymentStatus = '';
-                this.isProccessing = true;
-
-                this.$store.dispatch('postPaymentDetails', {
-                    type: type.id
-                }).then(response => {
-                    window.location.replace("/checkout/confirmation");
-                }).catch(error => {
-                    this.paymentStatus = 'error';
-                    this.isProccessing = false;
-                });
-            },
-            buildForm(price) {
-
-                if (this.braintreeDropin) {
-                    this.braintreeDropin.teardown();
-                    CandyEvent.$off('submitPayment');
-                }
-
-                braintree.dropin.create({
-                    authorization: this.auth,
-                    container: '#dropin-container',
-                    paypal: {
-                        container: 'paypal-container',
-                        singleUse: true,
-                        flow: 'checkout',
-                        amount: price, // Required
-                        currency: 'GBP', // Required
-                        headless: true
-                    }
-                }, (ce, i) => {
-
-                    this.braintreeDropin = i;
-                    var createErr = ce;
-                    var _this = this;
-
-                    CandyEvent.$on('submitPayment', function() {
-                        _this.braintreeDropin.requestPaymentMethod(function (err, payload) {
-                            if (payload) {
-                                _this.isProccessing = true;
-                                _this.$store.dispatch('postPaymentDetails', {
-                                    token: payload.nonce
-                                }).then(response => {
-                                    window.location.replace("/checkout/confirmation");
-                                })
-                                .catch(error => {
-                                    _this.paymentStatus = 'declined';
-                                    _this.isProccessing = false;
-                                });
-                            } else {
-                                _this.paymentStatus = 'missing_payment_method';
-                            }
-                        });
-                    });
-                });
-            },
-            setPanelStatus(value) {
-                this.$store.commit('setPanelStatus', {'key':'billingAddress', 'value': value});
-                this.$store.commit('setPanelStatus', {'key':'paymentDetails', 'value': 'collapse'});
-            },
-            submitBillingForm() {
-                this.$store.dispatch('postBillingAddress')
-                .then(response => {
-                    this.$store.commit('setOrderTotal', response.data.order.total);
-                    this.$store.commit('setOrderTax', response.data.order.vat);
-                    this.$store.commit('setPanelStatus', {'key':'billingAddress', 'value':'view'});
-                    this.$store.commit('setPanelStatus', {'key':'paymentDetails', 'value':'edit'});
-                })
-                .catch(error => {
-                    this.errors = error.response.data;
-                });
-            },
-            submitPaymentForm() {
-                this.paymentStatus = '';
-                CandyEvent.$emit('submitPayment');
-            }
-        }
-    }
+      );
+    },
+    setPanelStatus(value) {
+      this.$store.commit('setPanelStatus', {
+        key: 'billingAddress',
+        value: value,
+      });
+      this.$store.commit('setPanelStatus', {
+        key: 'paymentDetails',
+        value: 'collapse',
+      });
+    },
+    submitBillingForm() {
+      this.$store
+        .dispatch('postBillingAddress')
+        .then(response => {
+          this.$store.commit('setOrderTotal', response.data.order.total);
+          this.$store.commit('setOrderTax', response.data.order.vat);
+          this.$store.commit('setPanelStatus', {
+            key: 'billingAddress',
+            value: 'view',
+          });
+          this.$store.commit('setPanelStatus', {
+            key: 'paymentDetails',
+            value: 'edit',
+          });
+        })
+        .catch(error => {
+          this.errors = error.response.data;
+        });
+    },
+    submitPaymentForm() {
+      this.paymentStatus = '';
+      CandyEvent.$emit('submitPayment');
+    },
+  },
+};
 </script>

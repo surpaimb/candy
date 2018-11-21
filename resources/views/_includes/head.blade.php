@@ -3,7 +3,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
+<meta name="language" content="{{ $language }}">
 <meta name="channel" content="{{ env('APP_CHANNEL', 'webstore') }}">
+<meta name="currency-code" content="{{ $currency['code'] }}">
+<meta name="currency-symbol" content="{{ $currency['symbol'] }}">
 
 <title>@yield('title')</title>
 <meta name="description" content="@yield('meta-desciption')">

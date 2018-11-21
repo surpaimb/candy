@@ -52,6 +52,7 @@ Route::post('checkout/contact-details', 'CheckoutController@postContactDetails')
 Route::post('checkout/billing-address', 'CheckoutController@postBillingAddress')->name('post-billing-address');
 Route::post('checkout/process', 'CheckoutController@proccessOrder')->name('proccess-order');
 Route::get('checkout/confirmation', 'CheckoutController@showConfirmation')->name('show-confirmation');
+Route::get('checkout/payment-types', 'CheckoutController@getPaymentTypes')->name('payment-types');
 
 /* Categories */
 Route::resource('categories', 'CategoryController');

@@ -11,7 +11,7 @@ const state = {
 
 const mutations = {
     setProduct(state, product) {
-        state.name = Candy.attribute(product,'name');
+        state.name = Candy.attribute(product, 'name');
         state.id = product.id;
         state.slug = Candy.route(product);
         state.thumbnail = product.thumbnail;

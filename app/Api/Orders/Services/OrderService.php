@@ -5,6 +5,7 @@ namespace App\Api\Orders\Services;
 use GetCandyClient;
 use Session;
 use App\Api\BaseService;
+use Log;
 
 class OrderService extends BaseService
 {
@@ -64,6 +65,7 @@ class OrderService extends BaseService
         $types = [];
         try {
             $types = GetCandyClient::Payment()->types();
+            Log::info('types',[$types]);
         } catch (\Exception $e) {
             return $e->getMessage();
         }

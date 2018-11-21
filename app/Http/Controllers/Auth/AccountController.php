@@ -31,7 +31,6 @@ class AccountController extends Controller
     public function showDetails()
     {
         $customer = GetCandyClient::Users()->current();
-
         return view('auth/account-details')
             ->with('customer', $customer['data']);
     }

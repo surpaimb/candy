@@ -44,7 +44,15 @@
                     <strong>Free Shipping</strong>
                     on orders over
                 </div>
-                
+                @if(userHasRole('trade'))
+                <div class="price-band trade">
+                    {!! $currency['symbol'] !!}<strong>{!! priceConverter(300) !!}</strong><small>+VAT</small>
+                </div>
+                @else
+                <div class="price-band">
+                    {!! $currency['symbol'] !!}<strong>{!! priceConverter(50) !!}</strong>
+                </div>
+                @endif
             </a>
             <nav class="store">
                 <ul>

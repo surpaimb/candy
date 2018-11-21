@@ -6,14 +6,14 @@
             <ul class="nav-wrap">
 
                 @forelse ($categories as $category)
-                    <li class="@if(count($category['children'])) sub-nav @else nav-{!! candyRoute($category) !!} @endif">
+                    <li class="@if(!empty($category['children']) && count($category['children'])) sub-nav @else nav-{!! candyRoute($category) !!} @endif">
                         <a href="/categories/{!! candyRoute($category) !!}" title="">
                             {!! candyAttribute($category, 'name') !!}
-                            @if(count($category['children']))
+                            @if(!empty($category['children']) && count($category['children']))
                                 <i class="fa fa-angle-down" aria-hidden="true"></i>
                             @endif
                         </a>
-                        @if(count($category['children']))
+                        @if(!empty($category['children']) && count($category['children']))
                            <div class="mega-menu">
                                 <div class="row sub-links">
                                     <div class="col-xs-12 visible-xs-block">

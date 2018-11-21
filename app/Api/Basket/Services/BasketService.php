@@ -2,6 +2,7 @@
 
 namespace App\Api\Basket\Services;
 
+use Log;
 use GetCandyClient;
 use App\Api\BaseService;
 
@@ -47,9 +48,9 @@ class BasketService extends BaseService
                 'id'        => $line['variant']['data']['product']['data']['id'],
                 'name'      => candyAttribute($line['variant']['data']['product']['data'], 'name'),
                 'quantity'  => (int) $line['quantity'],
-                'thumbnail' => $line['variant']['data']['product']['data']['thumbnail'],
+                'thumbnail' => '',//$line['variant']['data']['product']['data']['thumbnail'],
                 'variant'   => $line['variant']['data'],
-                'total'     => (float) $line['total'],
+                'total'     => (float) $line['line_total'],
                 'slug'      => candyRoute($line['variant']['data']['product']['data'])
             ];
 
@@ -77,7 +78,7 @@ class BasketService extends BaseService
             ];
 
         }
-
+        Log::info($variants);
         // Update Basket
         try {
             $basket = GetCandyClient::Basket($basketIdUrl .'&'. http_build_query($variants))->update();
